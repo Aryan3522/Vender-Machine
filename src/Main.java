@@ -1,13 +1,37 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import Users.User;
+import machine.ProdsList;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+void main() throws InterruptedException {
+    int insertMoney;
+    ProdsList list = new ProdsList("Lays", 20);
+    User usr = new User();
+    usr.selectProd("Lays");
+    insertMoney = usr.insertMoney(100);
+
+    System.out.println(list.toString());
+
+    if(insertMoney > 0){
+        System.out.println("Inserting Money");
+        if(list.getProdName().equals(usr.getProdName())){
+            System.out.println("Product Found");
+            if(insertMoney > list.getProdPrice()){
+                try{
+                    System.out.println("Buying Product: " + list.getProdName());
+                    usr.setMoney(usr.getMoney() - list.getProdPrice());
+                    Thread.sleep(500);
+                    System.out.println("Product bought successfully, Product name: " + list.getProdName());
+                    System.out.println("Returning Money: " + usr.getMoney());
+                }catch (InterruptedException e){
+                    System.out.println("Task interrupted");
+                    throw e;
+                }
+            }else {
+                System.out.println("Not enough money");
+            }
+        }else {
+            System.out.println("Product Not Found");
+        }
+    }else {
+        System.out.println("Please Insert Money");
     }
 }
