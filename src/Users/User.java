@@ -1,16 +1,16 @@
 package Users;
 
 public class User {
-    private String prodName;
+//    private String prodName;
     private int Money;
 
-    public String getProdName() {
-        return prodName;
-    }
+//    public String getProdName() {
+//        return prodName;
+//    }
 
-    public void selectProd(String prodName) {
-        this.prodName = prodName;
-    }
+//    public void selectProd(String prodName) {
+//        this.prodName = prodName;
+//    }
 
     public int getMoney() {
         return Money;
