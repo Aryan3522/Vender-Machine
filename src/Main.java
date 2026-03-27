@@ -18,7 +18,9 @@ void main() throws InterruptedException {
     Scanner sc = new Scanner(System.in);
     System.out.println("Enter the product name:");
     String prodName = sc.nextLine();
-    System.out.println("Finding Product: " + prodName);
+
+    System.out.println("Enter Quantity");
+    int quantity = sc.nextInt();
 
 
     ProdsList foundProduct = null;
@@ -35,10 +37,10 @@ void main() throws InterruptedException {
         System.out.println("Product Found");
         if (insertMoney > 0) {
             System.out.println("Inserting Money");
-            if (insertMoney > foundProduct.getProdPrice()) {
+            if (insertMoney > (foundProduct.getProdPrice() * quantity)) {
                 try {
                     System.out.println("Buying Product: " + foundProduct.getProdName());
-                    usr.setMoney(usr.getMoney() - foundProduct.getProdPrice());
+                    usr.setMoney(usr.getMoney() - (foundProduct.getProdPrice() * quantity));
                     Thread.sleep(500);
                     System.out.println("Product bought successfully, Product name: " + foundProduct.getProdName());
                     System.out.println("Returning Money: " + usr.getMoney());
@@ -48,9 +50,40 @@ void main() throws InterruptedException {
                 }
             } else {
                 System.out.println("Not enough money");
+                System.out.println("Do You want to insert more money?");
+                Scanner sc2 = new Scanner(System.in);
+                String insert = sc2.nextLine();
+                if (insert.equalsIgnoreCase("yes")) {
+                    System.out.println("Enter the amount you want to insert:");
+                    int amount = sc2.nextInt();
+                    insertMoney = amount + insertMoney;
+                    usr.setMoney(insertMoney);
+                    System.out.println("adding money...");
+                    System.out.println("Total money: " + usr.getMoney());
+                    if (insertMoney > (foundProduct.getProdPrice() * quantity)) {
+                        try {
+                            System.out.println("Buying Product: " + foundProduct.getProdName());
+                            usr.setMoney(usr.getMoney() - (foundProduct.getProdPrice() * quantity));
+                            Thread.sleep(500);
+                            System.out.println("Product bought successfully, Product name: " + foundProduct.getProdName());
+                            System.out.println("Returning Money: " + usr.getMoney());
+                        } catch (InterruptedException e) {
+                            System.out.println("Task interrupted");
+                            throw e;
+                        }
+                    } else {
+                        System.out.println("Not enough money");
+                        System.out.println("Product: " + foundProduct.getProdName() + " costs: " + foundProduct.getProdPrice() + " per item!");
+                        System.out.println("You can buy: " + (insertMoney/foundProduct.getProdPrice()) + " items!");
+                        System.out.println("Returning money: " + insertMoney);
+                    }
+                } else {
+                    System.out.println("Quitting...");
+                    System.out.println("Returning money: " + insertMoney);
+                }
             }
         } else {
-            System.out.println("Please Insert Money");
+            System.out.println("Insert money and try again");
         }
 
     } else {
