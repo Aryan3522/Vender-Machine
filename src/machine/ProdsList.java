@@ -2,6 +2,7 @@ package machine;
 
 public class ProdsList {
     private String prodName;
+    private int quantity;
     private int prodPrice;
 
     public String getProdName() {
@@ -20,8 +21,17 @@ public class ProdsList {
         this.prodPrice = prodPrice;
     }
 
-    public ProdsList(String prodName, int prodPrice) {
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public ProdsList(String prodName, int quantity, int prodPrice) {
         this.prodName = prodName;
+        this.quantity = quantity;
         this.prodPrice = prodPrice;
     }
 
